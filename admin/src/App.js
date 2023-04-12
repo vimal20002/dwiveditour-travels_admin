@@ -1,24 +1,28 @@
-import logo from './logo.svg';
 import './App.css';
+import AdminBooking from './component/AdminBooking';
+import BookingHist from './component/BookingHist';
+import AdminNavbar from './component/AdminNavbar';
+import { Route, Switch } from 'react-router-dom';
+import React from 'react';
+import AddTour from './component/AddTour';
+import { ToastContainer } from 'react-toastify';
+import LogIn from './component/LogIn';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+    <Switch>
+      <React.Fragment>
+        <AdminNavbar/>
+        <ToastContainer/>
+        <Route exact path ="/"><AdminBooking/></Route>
+        <Route exact path ="/update/:id"><AddTour/></Route>
+        <Route exact path ="/bookings"><BookingHist/></Route>
+        <Route exact path ="/addtour"><AddTour/></Route>
+        <Route exact path ="/login"><LogIn/></Route>
+      </React.Fragment>
+    </Switch>
+    </>
   );
 }
 
