@@ -7,6 +7,7 @@ import React from 'react';
 import AddTour from './component/AddTour';
 import { ToastContainer } from 'react-toastify';
 import LogIn from './component/LogIn';
+import Reviews from './component/Reviews';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route exact path ="/bookings"><BookingHist/></Route>
         <Route exact path ="/addtour"><AddTour/></Route>
         <Route exact path ="/login"><LogIn/></Route>
+        <Route exact path ="/review"><Reviews/></Route>
       </React.Fragment>
     </Switch>
     </>

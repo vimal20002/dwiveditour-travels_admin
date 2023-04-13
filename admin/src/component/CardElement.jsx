@@ -1,7 +1,7 @@
 import React from 'react'
 import './cardelement.css'
 import { useDispatch } from 'react-redux'
-import { delTour } from './redux/features/adminSlice';
+import {  delTour } from './redux/features/adminSlice';
 import { Link } from 'react-router-dom';
 
 const CardElement = ({title,imgUrl,price, id}) => {
@@ -11,6 +11,7 @@ const CardElement = ({title,imgUrl,price, id}) => {
       _id:id,
       token:JSON.parse(localStorage.getItem("token"))
     }
+    console.log(formValue)
     dispatch(delTour({formValue}));
   
   }

@@ -21,3 +21,9 @@ export const delBooking = (formValue)=>{
 export const adminLogin= (formValue)=>{
     return API.post("/adminlogin", formValue);
 }
+export const getQuerry= (formValue)=>{
+    return API.post("/getquerry", formValue);
+}
+export const delreview= (formValue)=>{
+    return API.post("/delreview", formValue);
+}

@@ -2,17 +2,36 @@ import {createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import * as api from "../api";
 import {toast} from "react-toastify"
 
-export const addTour = createAsyncThunk("addtour", async({formValue, history})=>{
+export const addTour = createAsyncThunk("addtour", async({formValue, history}, { rejectWithValue })=>{
 try {
     const res = await api.addTour(formValue);
+    if(res.data.message){
+        toast.error(res.data.message)
+        return rejectWithValue(res.data.message)
+    }
+    else{
     toast.success("Tour Added Successfiully");
     history.push("/")
     return res;
+    }
 } catch (error) {
     toast.error(error)
 }
 })
-
+export const getQuerry = createAsyncThunk("getQuerry",async(formValue, { rejectWithValue })=>{
+    try {
+        const res = await api.getQuerry(formValue);
+    if(res.data.message){
+        toast.error(res.data.message)
+        return rejectWithValue(res.data.message)
+    }
+    else{
+    return res;
+    }
+    } catch (error) {
+        console.log(error)
+    }
+})
 export const getTour = createAsyncThunk("gettour", async()=>{
     try {
         const res = await api.getTour();
@@ -21,38 +40,78 @@ export const getTour = createAsyncThunk("gettour", async()=>{
         toast.error(error)
     }
     })
-    export const delTour = createAsyncThunk("deltour", async({formValue})=>{
+    export const delTour = createAsyncThunk("deltour", async({formValue}, { rejectWithValue })=>{
+        console.log(formValue)
         try {
             const res = await api.delTour(formValue);
+            if(res.data.message){
+                toast.error(res.data.message)
+                return rejectWithValue(res.data.message)
+            }
+            else{
             toast.success("Deleted Successfully")
 
             return res;
+            }
         } catch (error) {
             toast.error(error)
         }
         })
-        export const delBooking = createAsyncThunk("delbooking", async({formValue})=>{
+        export const delBooking = createAsyncThunk("delbooking", async({formValue}, { rejectWithValue })=>{
+            const res = await api.delBooking(formValue);
             try {
-                const res = await api.delBooking(formValue);
+                if(res.data.message){
+                    toast.error(res.data.message)
+                    return rejectWithValue(res.data.message)
+                }
+                else{
                 toast.success("Deleted Successfully")
                 return res;
+                }
             } catch (error) {
                 toast.error(error)
             }
             })
-       export const updateTour = createAsyncThunk("updateTour", async({formValue, history})=>{
+            export const delreview = createAsyncThunk("delreview", async({formValue}, { rejectWithValue })=>{
+                const res = await api.delreview(formValue);
+                try {
+                    if(res.data.message){
+                        toast.error(res.data.message)
+                        return rejectWithValue(res.data.message)
+                    }
+                    else{
+                    toast.success("Deleted Successfully")
+                    return res;
+                    }
+                } catch (error) {
+                    toast.error(error)
+                }
+                })
+       export const updateTour = createAsyncThunk("updateTour", async({formValue, history}, { rejectWithValue })=>{
         try {
             const res = await api.updateTour(formValue);
+            if(res.data.message){
+                toast.error(res.data.message)
+                return rejectWithValue(res.data.message)
+            }
+            else{
             toast.success("Updated Successfully")
             history.push("/")
             return res;
+            }
         } catch (error) {
             toast.error(error)
         }
         })
- export const getBookings = createAsyncThunk("getBokings", async(formValue)=>      {
+ export const getBookings = createAsyncThunk("getBokings", async(formValue, { rejectWithValue })=>      {
 const res = await api.getBookings(formValue);
+if(res.data.message){
+    toast.error(res.data.message)
+    return rejectWithValue(res.data.message)
+}
+else{
 return res;
+}
  })
  export const adminLogin = createAsyncThunk("adminlogin", async({formValue, history}, { rejectWithValue })=>{
     try {
@@ -78,6 +137,7 @@ const adminSlice = createSlice({
         bookings:null,
         loading:null,
         error:null,
+        querry:null,
     },
     extraReducers:{
         [addTour.pending]:(state,action)=>{
@@ -119,6 +179,7 @@ const adminSlice = createSlice({
             state.error = action.payload?.message
             
         },
+       
         [updateTour.pending]:(state,action)=>{
             state.loading= true;
         },
@@ -167,6 +228,32 @@ const adminSlice = createSlice({
             localStorage.setItem("token", JSON.stringify(action.payload?.data?.token))
         },
         [adminLogin.rejected]:(state,action)=>{
+            state.loading = false;
+            state.error = action.payload?.message
+            
+        },
+        [getQuerry.pending]:(state,action)=>{
+            state.loading= true;
+        },
+        [getQuerry.fulfilled]:(state,action)=>{
+            state.loading = false;
+            state.querry= action.payload?.data;
+            localStorage.setItem("querry", JSON.stringify(action.payload?.data))
+        },
+        [getQuerry.rejected]:(state,action)=>{
+            state.loading = false;
+            state.error = action.payload?.message
+            
+        },
+        [delreview.pending]:(state,action)=>{
+            state.loading= true;
+        },
+        [delreview.fulfilled]:(state,action)=>{
+            state.loading = false;
+            state.querry= action.payload?.data;
+            localStorage.setItem("querry", JSON.stringify(action.payload?.data))
+        },
+        [delreview.rejected]:(state,action)=>{
             state.loading = false;
             state.error = action.payload?.message
             

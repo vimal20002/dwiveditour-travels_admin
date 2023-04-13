@@ -9,9 +9,9 @@ const Historycard = ({name,email,pickup,destination,time,date, phone, status, id
   const dispatch = useDispatch();
  const  handleDel = ()=>{
   const formValue = {
-    _id:id
+    _id:id,
+    token:JSON.parse(localStorage.getItem("token"))
   }
-  console.log(id)
   dispatch(delBooking({formValue}))
  }
   return (
