@@ -22,7 +22,6 @@ const Reviews = () => {
     <div className='main-history'>
                 <h2 >Querries</h2>
 
-                <ReviewCard name="vim" feed="vdbdbj" id="bgch" data={data} setDt ={setDt} />
     {
         data?.map((f)=>{
             const e = f.querry;

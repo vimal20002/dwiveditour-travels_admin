@@ -3,7 +3,7 @@ import logo from './images/logo.png'
 import userimg from './images/user.png'
 import "./navbar.css"
 import menu from './images/menu.png'
-import  {Link} from 'react-router-dom'
+import  {Link, useHistory} from 'react-router-dom'
 import { useSelector } from 'react-redux'
 
 import {toast} from "react-toastify"
@@ -16,7 +16,7 @@ function AdminNavbar() {
 
  const {admin} = useSelector((state)=>({...state.admin}));
 
-
+const history = useHistory()
 useEffect(()=>{
   if(admin){
     console.log(admin)
@@ -73,8 +73,8 @@ useEffect(()=>{
     console.log(menuBar);
   }
 const logOut=()=>{
-  console.log("h")
   localStorage.clear()
+  history.push("/")
   toast.success("Logged Out successfully")
 }
 
@@ -96,6 +96,7 @@ const logOut=()=>{
       <div className="btn nav-home"><Link to="/"><h5>Home</h5></Link></div>
       <div className="btn nav-home"><Link to="/bookings"><h5>Bookings</h5></Link></div>
       <div className="btn nav-bookings"><Link to="/addtour"><h5>Add Tour</h5></Link></div>
+      <div className="btn nav-bookings"><Link to="/review"><h5>Review</h5></Link></div>
    
       </div>
      
@@ -113,7 +114,8 @@ const logOut=()=>{
     <div className="btn nav-home l-options"><Link to="/"><h5 className='l-options'>Home</h5></Link></div>
       <div className="btn nav-home l-options"><Link to="/bookings"><h5 className='l-options'>Bookings</h5></Link></div>
       <div className="btn nav-bookings l-options"><Link to="/addtour"><h5 className='l-options'>Add Tour</h5></Link></div>
-       
+      <div className="btn nav-bookings l-options"><Link to="/review"><h5 className='l-options'>Review</h5></Link></div>
+
       </div>
     <div className="user-op options" id='user-op'>
       <ul className='options'>
