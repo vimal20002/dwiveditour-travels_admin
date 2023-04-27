@@ -23,7 +23,7 @@ const Historycard = ({name,email,pickup,destination,time,date, phone, status, id
         <div className="dest"><h4>Destination :</h4>{destination}</div>
         <div className="dest"><h4>Date :</h4>{date}</div>
         <div className="time"><h4>Time :</h4> {time}</div>
-        <div className="time"><h4>Status :</h4> {status}</div>
+        <div className="time"><h4>Status :</h4> {status ? "Paid":"Unpaid"}</div>
       </div>
         <div className="btnn">
           <a href={`tel:${phone}`}>

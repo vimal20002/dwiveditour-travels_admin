@@ -1,35 +1,35 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import ReviewCard from './ReviewCard'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { getQuerry } from './redux/features/adminSlice'
+import lod from "./images/lod.gif"
 
 const Reviews = () => {
-    const [data,setDt]=useState([])
-    const dt = JSON.parse(localStorage.getItem("querry"));
+    const {loading,querry} = useSelector((state)=>({...state.admin}))
     const dispatch =useDispatch()
     useEffect(()=>{
         const formValue ={
             token:JSON.parse(localStorage.getItem("token"))
         }
         dispatch(getQuerry(formValue))
-        setDt(dt)
         // eslint-disable-next-line
     },[])
     useEffect(()=>{
-        console.log(data)
-    },[data])
+    },[querry])
   return (<div className='mnn'>
+        {  loading? <img src={lod} className='ldd' alt='loder'/>:
     <div className='main-history'>
+
                 <h2 >Querries</h2>
 
     {
-        data?.map((f)=>{
+        querry&&querry?.map((f)=>{
             const e = f.querry;
-            console.log(e)
-           return <ReviewCard name={e?.email} feed={e?.querry} id={f?._id} data={data} setDt ={setDt}/>
+           return <ReviewCard key={f?._id} name={e?.email} feed={e?.querry} id={f?._id} />
         })
     }
     </div>
+}
     </div>
   )
 }

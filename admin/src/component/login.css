@@ -61,36 +61,3 @@
         margin: 50px 30px;
     }
 }
-
-
-
-
-.loginForm input{
-    background-color: whitesmoke;
-    box-shadow: 2px 2px 3px 0px rgba(120, 92, 205, 0.767);
-    border: 2px solid rgba(49, 0, 0, 0.871);
-    border-radius: 10px;
-     outline: none;
-    width:300px;
-    height:40px;
-    padding: 10px;
-    font-size: 23px;
-    font-family: 'Times New Roman', Times, serif;
-    font-weight: 500;
-    color:rgb(255, 25, 125);
-}
-.loginForm input::placeholder{
-    color:rgb(255, 25, 125);
-}
-.book-btn{
-    background-color: #8482FF;
-    padding: 10px 20px ;
-    border-radius: 25px;
-    color: white;
-    cursor: pointer;
-}
-.book-btn:hover{
-    color: black;
-    background-color: white;
-    border: 1px solid black;
-}

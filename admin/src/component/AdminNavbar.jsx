@@ -4,9 +4,9 @@ import userimg from './images/user.png'
 import "./navbar.css"
 import menu from './images/menu.png'
 import  {Link, useHistory} from 'react-router-dom'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
-import {toast} from "react-toastify"
+import { logout } from './redux/features/adminSlice'
 
 
 function AdminNavbar() {
@@ -15,7 +15,7 @@ function AdminNavbar() {
 
 
  const {admin} = useSelector((state)=>({...state.admin}));
-
+const dispatch  =useDispatch()
 const history = useHistory()
 useEffect(()=>{
   if(admin){
@@ -35,8 +35,9 @@ useEffect(()=>{
       }) !== 'options' ){
         //element clicked wasn't the div; hide the div
         setToolBar(0);
-       
+       if(admin){
         userOp.style.display = 'none';
+       }
       
       }
       if(Array.from(e.target.classList).find((element)=>{
@@ -52,6 +53,7 @@ useEffect(()=>{
   
 
   const showOption = (e)=>{
+    if(admin){
     if(toolBar % 2===0)
     document.getElementById('user-op').style.display = "flex"
     else
@@ -59,6 +61,7 @@ useEffect(()=>{
       document.getElementById('user-op').style.display = "none"
     }
     setToolBar(toolBar + 1);
+  }
   }
 
   const showMenuOption = (e)=>{
@@ -69,13 +72,13 @@ useEffect(()=>{
       document.getElementById('left-options').style.display = "none"
     }
     setMenuBar(menuBar + 1);
-    console.log(document.getElementById('left-options'))
-    console.log(menuBar);
+
   }
+
+
+
 const logOut=()=>{
-  localStorage.clear()
-  history.push("/")
-  toast.success("Logged Out successfully")
+dispatch(logout({history}))
 }
 
 
@@ -117,11 +120,11 @@ const logOut=()=>{
       <div className="btn nav-bookings l-options"><Link to="/review"><h5 className='l-options'>Review</h5></Link></div>
 
       </div>
-    <div className="user-op options" id='user-op'>
+    {admin && <div className="user-op options" id='user-op'>
       <ul className='options'>
         <li className='options' onClick={()=>{logOut()}}>Log Out</li>
       </ul>
-    </div>
+    </div>}
     </>
   )
 }

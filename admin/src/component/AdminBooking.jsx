@@ -4,37 +4,38 @@ import "./catalogue.css"
 import { useDispatch, useSelector } from 'react-redux'
 import { getTour } from './redux/features/adminSlice'
 import sch from "./images/search.png"
+import lod from "./images/lod.gif"
 const AdminBooking = () => {
   const [qr, setQr]=useState("")
-  const [data, setData]=useState(null)
+  const [data, setData]=useState("")
 
-     const {loading} = useSelector((state)=>({...state.admin}))
-     const dt = useSelector((state)=>({...state.admin}))
+
+     const {loading,tours} = useSelector((state)=>({...state.admin}))
      const dispatch = useDispatch();
      useEffect(()=>{
-      if(dt?.tours===null){
       dispatch(getTour())
-    }
-    else
-    {
-        setData(dt?.tours)
-
-      }
       // eslint-disable-next-line
-     },[loading])
+     },[])
+     useEffect(()=>{
+      setData(tours)
+      // eslint-disable-next-line
+     },[tours])
      useEffect(()=>{
       // eslint-disable-next-line
      },[data])
      const handleSearch = (e)=>{
       setQr(e.target.value)
       console.log(qr)
-      const obj = dt?.tours?.filter((el)=>{
+      const obj = tours.filter((el)=>{
         return el.title.toLowerCase().startsWith(e.target.value.toLowerCase())===true;
       })
       console.log(obj)
       setData(obj)
      }
   return (<div className='mnn'>
+{
+  loading? <img src={lod} className='ldd' alt='loader'/>:
+
          <div className="ct">
           <div className="search-box">
             <input type="text" placeholder='Search in Catalog' value={qr} onChange={(e)=>{
@@ -50,6 +51,7 @@ const AdminBooking = () => {
     })}
    </div>
     </div>
+}
    </div>
   )
 }

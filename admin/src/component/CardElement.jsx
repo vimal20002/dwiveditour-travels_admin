@@ -22,11 +22,11 @@ const CardElement = ({title,imgUrl,price, id}) => {
     
     
             <h2 className='card-title'>{title}</h2>
-            <div className="payment-sec">
               <div className="pricing-sec">
               <h2>Price</h2>
               <h3> ₹{price}</h3> 
               </div>
+            <div className="payment-sec">
        <Link to = {`update/${id}`}>
               <div className="book-now">
        Edit

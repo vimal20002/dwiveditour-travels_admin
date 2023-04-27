@@ -1,5 +1,5 @@
 import axios from "axios"
-const API = axios.create({baseURL:"http://localhost:8000"});
+const API = axios.create({baseURL:"https://dwiveditourfinal.onrender.com"});
 export const addTour = (formValue)=>{
 return API.post("/addtour",formValue);
 }

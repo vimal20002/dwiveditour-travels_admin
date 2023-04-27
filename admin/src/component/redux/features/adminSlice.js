@@ -105,6 +105,7 @@ export const getTour = createAsyncThunk("gettour", async()=>{
         })
  export const getBookings = createAsyncThunk("getBokings", async(formValue, { rejectWithValue })=>      {
 const res = await api.getBookings(formValue);
+console.log(res)
 if(res.data.message){
     toast.error(res.data.message)
     return rejectWithValue(res.data.message)
@@ -128,6 +129,12 @@ return res;
     } catch (error) {
         toast.error(error)
     }
+    })
+    export const logout= createAsyncThunk('logout',({history})=>{
+        localStorage.clear()
+        history.push("/")
+        toast.success("Logged Out successfully")
+        return;
     })
 const adminSlice = createSlice({
     name:"admin",
@@ -159,7 +166,6 @@ const adminSlice = createSlice({
         [getTour.fulfilled]:(state,action)=>{
             state.loading = false;
             state.tours= action.payload?.data;
-            localStorage.setItem("tour", JSON.stringify(action.payload?.data))
         },
         [getTour.rejected]:(state,action)=>{
             state.loading = false;
@@ -172,7 +178,6 @@ const adminSlice = createSlice({
         [delTour.fulfilled]:(state,action)=>{
             state.loading = false;
             state.tours= action.payload?.data;
-            localStorage.setItem("tour", JSON.stringify(action.payload?.data))
         },
         [delTour.rejected]:(state,action)=>{
             state.loading = false;
@@ -186,7 +191,6 @@ const adminSlice = createSlice({
         [updateTour.fulfilled]:(state,action)=>{
             state.loading = false;
             state.tours= action.payload?.data;
-            localStorage.setItem("tour", JSON.stringify(action.payload?.data))
         },
         [updateTour.rejected]:(state,action)=>{
             state.loading = false;
@@ -199,7 +203,6 @@ const adminSlice = createSlice({
         [getBookings.fulfilled]:(state,action)=>{
             state.loading = false;
             state.bookings= action.payload?.data;
-            localStorage.setItem("bookings", JSON.stringify(action.payload?.data))
         },
         [getBookings.rejected]:(state,action)=>{
             state.loading = false;
@@ -211,7 +214,6 @@ const adminSlice = createSlice({
         [delBooking.fulfilled]:(state,action)=>{
             state.loading = false;
             state.bookings= action.payload?.data;
-            localStorage.setItem("bookings", JSON.stringify(action.payload?.data))
         },
         [delBooking.rejected]:(state,action)=>{
             state.loading = false;
@@ -238,7 +240,6 @@ const adminSlice = createSlice({
         [getQuerry.fulfilled]:(state,action)=>{
             state.loading = false;
             state.querry= action.payload?.data;
-            localStorage.setItem("querry", JSON.stringify(action.payload?.data))
         },
         [getQuerry.rejected]:(state,action)=>{
             state.loading = false;
@@ -251,9 +252,20 @@ const adminSlice = createSlice({
         [delreview.fulfilled]:(state,action)=>{
             state.loading = false;
             state.querry= action.payload?.data;
-            localStorage.setItem("querry", JSON.stringify(action.payload?.data))
         },
         [delreview.rejected]:(state,action)=>{
+            state.loading = false;
+            state.error = action.payload?.message
+            
+        },
+        [logout.pending]:(state,action)=>{
+            state.loading= true;
+        },
+        [logout.fulfilled]:(state,action)=>{
+            state.loading = false;
+            state.admin = null;
+        },
+        [logout.rejected]:(state,action)=>{
             state.loading = false;
             state.error = action.payload?.message
             
